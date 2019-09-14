@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     //
+    // protected $primaryKey = "iddocuments";
+    protected $fillable = [
+        'ref','file',
+    ];
+    public $timestamps = false;
 
     public function getRouteKeyName(){
-    	return 'code';	
+    	return 'ref';	
     }
 
-    public function getDocument($code){
-    	return self::join('promotions', 'documents.id_promotion', '=', 'promotions.id')
-    				->join('annee', 'documents.id_annee', '=', 'annee.id')
-                      ->where('code',$code)->first();
-    }
+    
 }

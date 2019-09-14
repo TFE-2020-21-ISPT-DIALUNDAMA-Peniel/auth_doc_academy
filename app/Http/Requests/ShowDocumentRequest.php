@@ -26,7 +26,7 @@ class ShowDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'bail|required|min:5|codeExist',
+            'code' => 'bail|required|min:5|exists:documents,ref',
             'code.codeExist' => 'Code Invalide'
         ];
     }

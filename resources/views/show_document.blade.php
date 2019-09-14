@@ -1,45 +1,54 @@
-@extends('layouts.master',['title'=>'Bienvenu(e)']) 
-@section('stylesheet')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/studentStyle.css') }}">
-@stop
-@section('container')
-    <div class="content-center" method= 'post' id='form' data-parsley-validate>
-      <div class="text-center mb-6">
-        @include('partials._logoIspt')
-       <div >
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-title-code"></h5>
-            </div>
-            <div class="modal-body" style="font-size: 1.1rem">
-                <div class="row">
-                  <ul class="list-unstyled ml-3 font-bold text-monospace" style="text-align: left">
-                    <li>Année académique :<span>{{ $annee->annee_format }}</span></li>
-                    <li>Matricule : <span>{{ $document->matricule }}</span></li>
-                    <li>Nom : <span>{{ $document->nom }}</span></li>
-                    <li>Postnom : <span>{{ $document->postnom }}</span></li>
-                    <li>Prénom : <span>{{ $document->prenom }}</span></li>
-                    <li>promotion : <span>{{ $promotion->abbr }}</span></li>
-                  </ul>
-                </div>
-                <div class="justify-content-center" style="width: 60%; margin-left: 20%; margin-right: 20%; ">
-                  <div class="btn btn-lg btn-block btn-outline-info" id="modal-code" style="font-size: 2.3rem">
-                    {{ $document->pourcentage }}% | {{ $document->mention }} 
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="{{ route('index') }}" class="btn btn-secondary" >Ok</a>
-            </div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Bil Wifi" content="{{ config('app.name') }} by KinDev">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href={{ asset('favicon.ico') }}>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ !empty ($title) ? $title .' | '. config('app.name') : config('app.name') }}  </title>
+
+        <!-- Custom CSS -->
+    <link href="{{ asset('backend/dist/css/style.min.css') }}" rel="stylesheet">
+     <link href="{{ asset('dataTables/dataTables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dataTables/buttons/css/buttons.dataTables.min.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body class="bg-light">
+    <div class="card">
+        <div class="card-header bg-primary">
+        @auth
+        <a href="{{ route('home') }}" class="text-white">retour</a>
+        @else
+        <a href="/" class="text-white">retour</a>
+        @endauth
+        
+            <p class=" h3 card-title text-center text-monospace text-white">DOCUMENT AUTHENTIQUE</p>
         </div>
     </div>
-</div>
+    <div id="bulletin" style="margin-top: -20px"></div>
 
+    <script src={{ asset('backend/assets/libs/jquery/dist/jquery.min.js') }}></script>
+    <!-- <script src="dist/js/jquery.ui.touch-punch-improved.js"></script>
+    <script src="dist/js/jquery-ui.min.js"></script> -->
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src={{ asset('backend/assets/libs/popper.js/dist/umd/popper.min.js') }}></script>
+    <script src={{ asset('backend/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}></script>
+    <script src={{ asset('js/pdfObject.js') }}></script>
+    <script>
+      var options = {
+        height: "600px",
+        // pdfOpenParams: { view: 'FitV', page: '2' }
+    };
+      PDFObject.embed("{{ url(Storage::url($document->file)) }}", "#bulletin",options);
+    </script>
 
-      {{-- @include('partials._@kindev') --}}
-</div>
-@stop
-@section('script')
-  <script type="text/javascript" src="{{  asset('js/appForm.js')  }}"></script>
-@stop
+  </body>
+
+<!-- Mirrored from getbootstrap.com/docs/4.1/examples/floating-labels/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Nov 2018 23:42:06 GMT -->
+</html>

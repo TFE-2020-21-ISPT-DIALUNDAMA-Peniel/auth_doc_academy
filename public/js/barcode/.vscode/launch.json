@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "nodemon gpu-test",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/src/gpu-utilities.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "breakOnLoad": true,
+      "cwd": "${workspaceRoot}",
+      "name": "Debug",
+      "request": "launch",
+      "sourceMapPathOverrides": {
+        "*": "${workspaceRoot}/src/*"
+      },
+      "sourceMaps": true,
+      "type": "chrome",
+      "url": "http://localhost:5000/docs",
+      "webRoot": "${workspaceFolder}/build"
+    }
+  ],
+  "version": "0.2.0"
+}
